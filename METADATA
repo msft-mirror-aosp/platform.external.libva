@@ -1,0 +1,20 @@
+name: "libva"
+description:
+    "Libva is an implementation for VA-API (Video Acceleration API) "
+    " "
+    "VA-API is an open-source library and API specification, which provides "
+    "access to graphics hardware acceleration capabilities for video "
+    "processing. It consists of a main library and driver-specific acceleration "
+    "backends for each supported hardware vendor."
+
+third_party {
+  identifier {
+    type: "Git"
+    value: "https://github.com/intel/libva"
+    primary_source: true
+    version: "2.21.0"
+  }
+  version: "2.21.0"
+  last_upgrade_date { year: 2024 month: 7 day: 11 }
+  license_type: NOTICE
+}
