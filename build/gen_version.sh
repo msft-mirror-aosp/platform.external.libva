@@ -26,25 +26,17 @@ libva_topdir="$1"
 version_h_in="$2"
 
 parse_configure_ac() {
-    sed -n "/^m4_define.*${1}.*\[\([0-9]*\)\].*/s//\1/p" ${2}
+    sed -n "/^m4_define.*${1}.*\[\([0-9]*\)\].*/s//\1/p" ${libva_topdir}/configure.ac
 }
 
 parse_configure() {
     sed -n "/^${1}=\([0-9]*\)/s//\1/p" ${libva_topdir}/configure
 }
 
-if [ "$1" = "--configure_ac" ]; then
-    # $2 specifies the path to configure.ac, $3 the path to version.h.in
-    libva_topdir="///"
-    version_h_in="$3"
-    va_api_major_version=`parse_configure_ac va_api_major_version $2`
-    va_api_minor_version=`parse_configure_ac va_api_minor_version $2`
-    va_api_micro_version=`parse_configure_ac va_api_micro_version $2`
-elif test -f "${libva_topdir}/configure.ac"; then
-    CONFIGURE_AC_PATH=${libva_topdir}/configure.ac
-    va_api_major_version=`parse_configure_ac va_api_major_version $CONFIGURE_AC_PATH`
-    va_api_minor_version=`parse_configure_ac va_api_minor_version $CONFIGURE_AC_PATH`
-    va_api_micro_version=`parse_configure_ac va_api_micro_version $CONFIGURE_AC_PATH`
+if test -f "${libva_topdir}/configure.ac"; then
+    va_api_major_version=`parse_configure_ac va_api_major_version`
+    va_api_minor_version=`parse_configure_ac va_api_minor_version`
+    va_api_micro_version=`parse_configure_ac va_api_micro_version`
 elif test -f "${libva_topdir}/configure"; then
     va_api_major_version=`parse_configure VA_API_MAJOR_VERSION`
     va_api_minor_version=`parse_configure VA_API_MINOR_VERSION`
