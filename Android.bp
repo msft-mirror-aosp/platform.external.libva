@@ -39,15 +39,15 @@ genrule {
     name: "libva_gen_headers",
     srcs: [
         "configure.ac",
-        "va/va_version.h.in",
         "va/drm/va_drm.h",
+        "va/va_version.h.in",
     ],
     tools: [
         "libva_gen_version_script",
     ],
     out: [
-        "va/va_version.h",
         "va/va_drm.h",
+        "va/va_version.h",
     ],
     cmd: "$(location libva_gen_version_script) " +
         "$$(dirname $(location configure.ac)) " +
@@ -84,9 +84,9 @@ cc_library_shared {
     name: "libva",
 
     shared_libs: [
+        "libcutils",
         "libdl",
         "libdrm",
-        "libcutils",
         "liblog",
     ],
 
@@ -109,19 +109,19 @@ cc_library_shared {
     ],
 
     srcs: [
-        "va/va.c",
-        "va/va_trace.c",
-        "va/va_str.c",
         "va/drm/va_drm.c",
         "va/drm/va_drm_auth.c",
         "va/drm/va_drm_utils.c",
+        "va/va.c",
+        "va/va_str.c",
+        "va/va_trace.c",
     ],
 
     cflags: [
+        "-DLOG_TAG=\"libva\"",
+        "-DSYSCONFDIR=\"/vendor/etc\"",
         "-Werror",
         "-Winvalid-pch",
-        "-DSYSCONFDIR=\"/vendor/etc\"",
-        "-DLOG_TAG=\"libva\"",
     ],
 
     arch: {
@@ -139,9 +139,9 @@ cc_library_shared {
     name: "libva-android",
 
     shared_libs: [
-        "libva",
         "libdrm",
         "liblog",
+        "libva",
     ],
 
     local_include_dirs: [
@@ -164,9 +164,9 @@ cc_library_shared {
     ],
 
     cflags: [
+        "-DLOG_TAG=\"libva-android\"",
         "-Werror",
         "-Winvalid-pch",
-        "-DLOG_TAG=\"libva-android\"",
     ],
 
     vendor: true,
